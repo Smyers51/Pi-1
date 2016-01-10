@@ -1,0 +1,31 @@
+
+#include <Servo.h>
+#include <LiquidCrystal.h> //Include the Library
+
+Servo myservo;  // create servo object to control a servo
+
+int potpin = 0;  // analog pin used to connect the potentiometer
+int val;    // variable to read the value from the analog pin
+int tim = 100;
+LiquidCrystal lcd(4, 6, 10, 11, 12, 13);
+
+void setup() {
+  myservo.attach(3);  // attaches the servo on pin 9 to the servo object
+  
+  lcd.begin(16, 2);  // set up the LCD's number of columns and rows:
+  
+}
+
+void loop() {
+  val = analogRead(potpin);            // reads the value of the potentiometer (value between 0 and 1023)
+  val = map(val, 0, 1023, 0, 180);     // scale it to use it with the servo (value between 0 and 180)
+  myservo.write(val);                  // sets the servo position according to the scaled value
+  delay(15);                           // waits for the servo to get there
+  
+   lcd.setCursor(0,0);  // set the cursor to column 15, line 0
+      lcd.display();  //Scroll
+      lcd.print(val);  // Print a message to the LCD
+      delay(tim);  //wait for 250 microseconds
+      lcd.clear();
+   
+}
